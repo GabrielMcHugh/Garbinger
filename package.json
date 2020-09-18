@@ -1,0 +1,19 @@
+{
+  "name": "garbinger",
+  "version": "1.0.0",
+  "description": "Data Visualisation and Waste Management in a smart city.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GabrielMcHugh/Garbinger.git"
+  },
+  "author": "Gabriel McHugh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GabrielMcHugh/Garbinger/issues"
+  },
+  "homepage": "https://github.com/GabrielMcHugh/Garbinger#readme"
+}
