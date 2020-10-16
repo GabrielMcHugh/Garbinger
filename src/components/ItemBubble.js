@@ -1,12 +1,20 @@
 import React from 'react';
 
-const ItemBubble = () => {
-	
-	return (
-		<div>
-			<h5>ItemBubble</h5>
-		</div>
-	)
+function ItemBubble({buttonImage, showModal}) {
+
+	function changeBackground(e) {
+    	e.target.style.fill = 'blue';
+  	}
+
+  	function revertBackground(e) {
+    	e.target.style.fill = 'none';
+  	}
+
+
+  	return (
+  		<img src={buttonImage} onMouseOver={changeBackground} onMouseLeave={revertBackground}/>
+  	)
+
 }
 
 export default ItemBubble;

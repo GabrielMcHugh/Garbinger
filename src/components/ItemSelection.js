@@ -5,7 +5,32 @@ const ItemSelection = () => {
 	
 	return (
 		<div>
-			<h1>The ItemSelection Is loaded</h1>
+			<div class='flex flex-wrap'>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+				<div class='ma2'><ItemBubble /></div>
+			</div>
 		</div>
 	)
 }
