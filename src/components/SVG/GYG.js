@@ -9,21 +9,24 @@ class GYG extends Component {
 			modalData: {
 				className: 'GYG',
 				disposalDescription: 'Tear it apart and deposit in the bin',
-				svgLink: 'NA',
+				svgLink: 'GYG',
 			}
 		}
 	}
 
 	changeColour = () => {
-    	this.setState({strokeColour: 'white', fillColour: '#05c793'});
+		let strokeColour = this.state.strokeColour;
+		let fillColour = this.state.fillColour;
+    	this.setState({strokeColour: fillColour, fillColour: strokeColour});
   	}
 
     revertColour = () => {
-        this.setState({strokeColour: '#05c793', fillColour: 'white'});
+    	let strokeColour = this.state.strokeColour;
+		let fillColour = this.state.fillColour;
+        this.setState({strokeColour: fillColour, fillColour: strokeColour});
     }
 
     addModalToDisplay = () => {
-    	console.log('got here');
     	if (!this.state.modalFlag) {
     		this.props.onClick(this.state.modalData)
     		this.setState({modalFlag: true})

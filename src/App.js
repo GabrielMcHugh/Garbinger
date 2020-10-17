@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
+
+import Card from './components/Card';
+
 import GYG from './components/SVG/GYG';
 import BoostJuice from './components/SVG/BoostJuice';
+import LeftOver from './components/SVG/LeftOver';
+import SushiTray from './components/SVG/SushiTray';
+import Coffee from './components/SVG/Coffee';
+import Cutlery from './components/SVG/Cutlery';
+import DrinkCan from './components/SVG/DrinkCan';
+import RiceBowl from './components/SVG/RiceBowl';
 
 
 // Buttons (https://github.com/rcaferati/react-awesome-button)
@@ -13,6 +22,8 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
+        statsPage: false,
+        thankYouPage: false,
         showModal: false,
         fillColour: 'blue',
         awesomeButtonVisibility: true, //It appears above modal so must disable
@@ -28,7 +39,7 @@ class App extends Component {
   }
   
   hideModal = () => {
-    this.setState({ show: false, awesomeButtonVisibility: true });
+    this.setState({ show: false, awesomeButtonVisibility: true, statsPage: true});
   }
 
   changeColour = () => {
@@ -55,26 +66,56 @@ class App extends Component {
 
   render () {
 
-    return(
-      <main>
+    return( this.state.thankYouPage ?
+        <main>
+          <h1>Thank You Page</h1>
+        </main>
+      : this.state.statsPage ?
+        <main>
+          <h1><span role="img" aria-label="rubbish">&#128465;</span>Thank You!</h1>
+          <div>
+            <div>
+              <h3>YOU JUST RECYCLED</h3>
+              <p>Isn't that awesome?</p>
+            </div>
+            <div>
+              <h3>DID YOU KNOW?</h3>
+              <p>of all turtles have eaten plastic?</p>
+            </div>
+          </div>
+          <div>
+            <p>Great Job! We understand that recycling is more than a feel-good experience. Show gratitude towards the person whollects wast from this bin!</p>
+            <AwesomeButton type="primary">Thank them!</AwesomeButton>
+            <p>It will only take two seconds to click the button above and it will mean the world to them</p>
+          </div>
+        </main>
+      : <main>
         <h1><span role="img" aria-label="waving-hand">&#x1f44b;</span> Hi!</h1>
         <p>We understand recyling can be hard. Select what you are disposing and we will help you out!</p>
         <div class="flex flex-wrap">
 
           <GYG onClick={this.addItem} onSecClick={this.removeItem}/>
           <BoostJuice onClick={this.addItem} onSecClick={this.removeItem}/>
+          <LeftOver onClick={this.addItem} onSecClick={this.removeItem}/>
+          <SushiTray onClick={this.addItem} onSecClick={this.removeItem}/>
+          <Coffee onClick={this.addItem} onSecClick={this.removeItem}/>
+          <Cutlery onClick={this.addItem} onSecClick={this.removeItem}/>
+          <RiceBowl onClick={this.addItem} onSecClick={this.removeItem}/>
+          <DrinkCan onClick={this.addItem} onSecClick={this.removeItem}/>
 
         </div>
         <div onClick={this.showModal}><AwesomeButton type="primary" visible={this.state.awesomeButtonVisibility}>Select Items</AwesomeButton></div>
 
-        <Modal show={this.state.show} handleClose={this.hideModal} className="flex flex-wrap">
+        <Modal show={this.state.show} handleClose={this.hideModal}>
           {
             this.state.selectedItems.map((data, index) => {
               return ( 
-                <div key={index}>
-                <h1>{data.className}</h1>
-                <p>{data.disposalDescription}</p> 
-                </div>
+                <Card
+                key={index}
+                title={data.className}
+                description={data.disposalDescription}
+                img={data.svgLink}
+                />
               );
             })
           }
@@ -93,12 +134,10 @@ const Modal = ({ handleClose, show, children }) => {
   return (
     <div className={showHideClassName}>
       <section className='modal-main'>
+        <div className='flex flex-wrap'>
         {children}
-        <button
-          onClick={handleClose}
-        >
-          Close
-        </button>
+        </div>
+        <div><AwesomeButton onPress={handleClose} type="primary">Proceed</AwesomeButton></div>
       </section>
     </div>
   );

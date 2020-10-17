@@ -10,21 +10,24 @@ class BoostJuice extends Component {
 			modalData: {
 				className: 'BoostJuice',
 				disposalDescription: 'Just toss it in the trash',
-				svgLink: 'NA',
+				svgLink: 'BoostJuice',
 			},
 		}
 	}
 
 	changeColour = () => {
-    	this.setState({strokeColour: 'white', fillColour: '#ce123e'});
+		let strokeColour = this.state.strokeColour;
+		let fillColour = this.state.fillColour;
+    	this.setState({strokeColour: fillColour, fillColour: strokeColour});
   	}
 
     revertColour = () => {
-        this.setState({strokeColour: '#ce123e', fillColour: 'white'});
+    	let strokeColour = this.state.strokeColour;
+		let fillColour = this.state.fillColour;
+        this.setState({strokeColour: fillColour, fillColour: strokeColour});
     }
 
     addModalToDisplay = () => {
-    	console.log('got here');
     	if (!this.state.modalFlag) {
     		this.props.onClick(this.state.modalData)
     		this.setState({modalFlag: true})
