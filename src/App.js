@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Card from './components/Card';
+import Heart from './components/heart';
 
 import GYG from './components/SVG/GYG';
 import BoostJuice from './components/SVG/BoostJuice';
@@ -10,6 +11,7 @@ import Coffee from './components/SVG/Coffee';
 import Cutlery from './components/SVG/Cutlery';
 import DrinkCan from './components/SVG/DrinkCan';
 import RiceBowl from './components/SVG/RiceBowl';
+import { ReactComponent as Waste } from './images/waste_collection.svg';
 
 
 // Buttons (https://github.com/rcaferati/react-awesome-button)
@@ -35,11 +37,20 @@ class App extends Component {
   }
 
   showModal = () => {
-    this.setState({ show: true, awesomeButtonVisibility: false });
+    this.setState({ show: true, awesomeButtonVisibility: false,});
   }
   
   hideModal = () => {
-    this.setState({ show: false, awesomeButtonVisibility: true, statsPage: true});
+    this.setState({ show: false, awesomeButtonVisibility: true, statsPage: true, selectedItems: [], });
+  }
+
+  goToThankYouPage = () => {
+    setTimeout(() => {
+      this.setState({statsPage: false, thankYouPage: true});
+    }, 500);
+    setTimeout(() => {
+      this.setState({statsPage: false, thankYouPage: false});
+    }, 5000);
   }
 
   changeColour = () => {
@@ -68,25 +79,38 @@ class App extends Component {
 
     return( this.state.thankYouPage ?
         <main>
-          <h1>Thank You Page</h1>
+          <h1 className="dark-blue"><span role="img" aria-label="heart">&#x1F49A;</span>Your Awesome</h1>
+          <Waste/>
+          <p className="blue">and we have recored 133 Thank-you's for him this week.</p>
+          <p className="gray">See you next time!</p>
         </main>
       : this.state.statsPage ?
         <main>
           <h1><span role="img" aria-label="rubbish">&#128465;</span>Thank You!</h1>
-          <div>
-            <div>
-              <h3>YOU JUST RECYCLED</h3>
-              <p>Isn't that awesome?</p>
+          <div className="flex items-center w-95">
+            <div className="flex pa4">
+              <div><img src={require('./images/Bin.png')} className="h5"/></div>
+              <div className="ma3">
+                <h3 className="dark-blue">YOU JUST RECYCLED</h3>
+                <h1 className="navy f-subheadline lh-title">330g</h1>
+                <p className="blue">Isn't that awesome?</p>
+              </div>
             </div>
-            <div>
-              <h3>DID YOU KNOW?</h3>
-              <p>of all turtles have eaten plastic?</p>
+            <div className="flex pa4">
+              <div><img src={require('./images/Turtle.png')} className="h5"/></div>
+              <div className="ma3">
+                <h3 className="dark-blue">DID YOU KNOW?</h3>
+                <h1 className="navy f-subheadline lh-title">52%</h1>
+                <p className="blue">of all turtles have eaten plastic?</p>
+              </div>
             </div>
           </div>
-          <div>
-            <p>Great Job! We understand that recycling is more than a feel-good experience. Show gratitude towards the person whollects wast from this bin!</p>
-            <AwesomeButton type="primary">Thank them!</AwesomeButton>
-            <p>It will only take two seconds to click the button above and it will mean the world to them</p>
+          <div className="flex flex-column items-center">
+            <p className="blue">Great Job! We understand that recycling is more than a feel-good experience. Show gratitude towards the person whollects wast from this bin!</p>
+            <div onClick={this.goToThankYouPage}>
+              <AwesomeButton type="primary">Thank them!<Heart/></AwesomeButton>
+            </div>
+            <p className="gray">It will only take two seconds to click the button above and it will mean the world to them</p>
           </div>
         </main>
       : <main>
