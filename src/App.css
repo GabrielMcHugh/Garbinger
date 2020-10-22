@@ -7,6 +7,10 @@
   pointer-events: none;
 }
 
+.weightReading {
+  font-size: 5vw;
+}
+
 main {
   display: flex;
   flex-direction: column;

@@ -26,17 +26,36 @@ class App extends Component {
     this.state = {
         statsPage: false,
         thankYouPage: false,
+        itemPage: false,
         showModal: false,
         fillColour: 'blue',
         awesomeButtonVisibility: true, //It appears above modal so must disable
         selectedItems: [],
+        weight: 0,
+        lastWeight: 0,
     }
   }
 
-  componentDidMount(){
+  /* TODO: The app polls the server regularly. If the weight
+  changes it updates the state.itemPage (using getItems() )
+  */
+
+  componentDidMount() {
+    //inside some class method
+    setInterval(this.getItems, 400);
+  }
+
+  getItems = () => {
+    fetch('http://localhost:3333/update')
+      .then(result => {if (result.status === 200 && !this.itemPage) {
+        this.setState({itemPage : true})
+        console.log("itempage is now true")
+      }
+    })
   }
 
   showModal = () => {
+    this.getWeight();
     this.setState({ show: true, awesomeButtonVisibility: false,});
   }
   
@@ -49,8 +68,8 @@ class App extends Component {
       this.setState({statsPage: false, thankYouPage: true});
     }, 500);
     setTimeout(() => {
-      this.setState({statsPage: false, thankYouPage: false});
-    }, 5000);
+      this.setState({itemPage: false, statsPage: false, thankYouPage: false});
+    }, 2000);
   }
 
   changeColour = () => {
@@ -74,6 +93,33 @@ class App extends Component {
     }
   }
 
+  getWeight = async () => {
+    fetch('http://localhost:3333/')
+      .then(response => response.text())
+      .then(weight => {
+        console.log(typeof this.state.lastWeight);
+        const floatWeight = parseFloat(weight).toFixed(2);
+        if (floatWeight > this.state.lastWeight) {
+          var newWeight = (floatWeight - this.state.lastWeight);
+          this.setState({weight: newWeight, lastWeight: floatWeight})
+        } else {
+          this.setState({weight: 0})
+        }
+        })
+  }
+
+  /*
+  5.6 - 0 = 5.6
+  weight = 5.6
+  lastweight = 5.6
+
+  12.4 - 5.6 = 4.8
+  new weight = 4.8
+  lastweight = 12.4
+
+
+  */
+
 
   render () {
 
@@ -92,7 +138,7 @@ class App extends Component {
               <div><img src={require('./images/Bin.png')} className="h5"/></div>
               <div className="ma3">
                 <h3 className="dark-blue">YOU JUST RECYCLED</h3>
-                <h1 className="navy f-subheadline lh-title">330g</h1>
+                <h1 className="navy weightReading">{this.state.weight} lbs</h1>
                 <p className="blue">Isn't that awesome?</p>
               </div>
             </div>
@@ -113,7 +159,8 @@ class App extends Component {
             <p className="gray">It will only take two seconds to click the button above and it will mean the world to them</p>
           </div>
         </main>
-      : <main>
+      : this.state.itemPage ?
+      <main>
         <h1><span role="img" aria-label="waving-hand">&#x1f44b;</span> Hi!</h1>
         <p>We understand recyling can be hard. Select what you are disposing and we will help you out!</p>
         <div class="flex flex-wrap">
@@ -146,6 +193,12 @@ class App extends Component {
         </Modal>
 
       </main>
+      : 
+      <main>
+          <h1 className="dark-blue"><span role="img" aria-label="heart">&#x1F49A;</span>Toss in some Rubbish!</h1>
+          <Waste/>
+          <p className="blue">Please!</p>
+        </main>
     )
   };
 }
